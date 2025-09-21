@@ -4,7 +4,7 @@ def test_homepage_and_form_submit():
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
-        page.goto("http://192.168.1.33:5000")  # replace with laptop IP
+        page.goto("http://localhost:5000")  # replace with laptop IP
         assert page.text_content("h1").strip() == "Hello World App"
         page.fill('input[name="textfield"]', 'hello-playwright')
         page.check('input[name="check"]')
