@@ -1,7 +1,9 @@
-from flask import Flask, render_template_string, request
+from flask import Flask, render_template_string, request, send_from_directory
+import os
 
 app = Flask(__name__)
 
+# HTML template with a text field and a checkbox
 html = """
 <h1>Hello World App</h1>
 <form method="POST">
@@ -19,6 +21,7 @@ html = """
 {% endif %}
 """
 
+# Route for the main page
 @app.route("/", methods=["GET", "POST"])
 def home():
     result = None
@@ -28,5 +31,15 @@ def home():
         result = f"Text: {text}, Checkbox: {check}"
     return render_template_string(html, result=result)
 
+# Route to serve the favicon
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(
+        os.path.join(app.root_path, 'static'),
+        'favicon.ico',
+        mimetype='image/vnd.microsoft.icon'
+    )
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
